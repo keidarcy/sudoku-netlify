@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,4 +29,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.field {
+  width: 3rem;
+  height: 3rem;
+  font-size: 2rem;
+  text-align: center;
+  color: #888;
+}
+
+.field[readonly] {
+  color: #222;
 }
