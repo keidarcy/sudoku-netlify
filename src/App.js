@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import generator from 'sudoku';
 import './App.css';
+import produce from 'immer';
 import SudokuBoard from './components/SudokuBoard';
 
 window.generator = generator;
@@ -13,6 +14,7 @@ window.generator = generator;
  */
 function generatorSudoku() {
   const raw = generator.makepuzzle();
+  console.log(raw);
 
   const result = { rows: [] };
 
@@ -30,6 +32,7 @@ function generatorSudoku() {
     }
     result.rows.push(row);
   }
+  console.log(result);
 
   return result;
 }
@@ -37,17 +40,29 @@ function generatorSudoku() {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = produce({}, () => ({
       sudoku: generatorSudoku()
-    };
+    }));
   }
+
+  handleChange = (e) => {
+    this.setState(
+      produce((state) => {
+        state.sudoku.rows[e.row].cols[e.col].value = e.value;
+      })
+    );
+  };
+
+  solveSudoku = () => {};
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <h1>Sudoku</h1>
         </header>
-        <SudokuBoard sudoku={this.state.sudoku} />
+        <SudokuBoard sudoku={this.state.sudoku} onChange={this.handleChange} />
+        <button onClick={this.solveSudoku}>solve</button>
       </div>
     );
   }
