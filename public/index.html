@@ -36,5 +36,17 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+        <script>
+      if ('paintWorklet' in CSS) {
+        CSS.paintWorklet.addModule('https://unpkg.com/houdini-tesla@0.0.2/dist/worklet.js');
+        CSS.paintWorklet.addModule('https://unpkg.com/houdini-static-gradient@1.1.2/worklet.js');
+      } else {
+        console.log('No CSS Houdini Support')
+      }
+    </script>
+
+    <!-- Include MDC Packages -->
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web/dist/material-components-web.min.js"></script>
   </body>
 </html>

@@ -1,10 +1,44 @@
+.tesla {
+  --tesla-segments: 5;
+  --tesla-angle: 45;
+  --tesla-blur: 5;
+  --tesla-width: 4;
+  --tesla-hue: 180;
+  --tesla-saturation: 100;
+  --tesla-lightness: 50;
+  background: paint(tesla-coil);
+}
+
+.static {
+  --static-gradient-direction: to-top;
+  --static-gradient-color: rgb(226, 80, 214);
+  --static-gradient-size: 10;
+  background: paint(static-gradient);
+  /* animation: fire 2s ease-in-out infinite; */
+}
+
+.space {
+  height: 10rem;
+  --static-gradient-color: rgba(204, 41, 182, 0.74);
+  --static-gradient-size: 13;
+}
+
+@keyframes fire {
+  from {
+    --static-gradient-size: 2;
+  }
+  to {
+    --static-gradient-size: 10;
+  }
+}
+
 .App {
   text-align: center;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  height: 10rem;
 }
 
 .App-header {
@@ -36,9 +70,10 @@
   height: 3rem;
   font-size: 2rem;
   text-align: center;
-  color: #888;
+  color: #444;
 }
 
 .field[readonly] {
-  color: #222;
+  color: #666;
+  background: #eee;
 }
