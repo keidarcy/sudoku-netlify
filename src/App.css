@@ -73,7 +73,29 @@
   color: #444;
 }
 
+.field:nth-child(3n) {
+  border-right: 10px solid #000000;
+}
+
+pre > div:nth-child(3n) input {
+  border-bottom: 10px solid #000000;
+}
+
+pre > div > input:nth-child(1) {
+  border-left: 10px solid #000000;
+}
+
+pre > div:nth-child(1) > input {
+  border-top: 10px solid #000000;
+}
+
 .field[readonly] {
   color: #666;
   background: #eee;
+  outline: none;
+}
+
+.solve {
+  padding: 1.5rem 3rem !important;
+  font-weight: 700 !important;
 }

@@ -44,7 +44,6 @@ class App extends Component {
     this.state = produce({}, () => ({
       sudoku: generatorSudoku()
     }));
-    this.myRef = React.createRef();
   }
 
   handleChange = (e) => {
@@ -58,14 +57,12 @@ class App extends Component {
   solveSudoku = () => {
     const board = this.state.sudoku.rows.map(({ cols }) => cols.map((col) => col.value));
 
-    console.log(JSON.parse(JSON.stringify(board)));
-
     const isValid = (board, row, col, num) => {
       for (let i = 0; i < 9; i++) {
         if (board[row][i] === num) return false;
         if (board[i][col] === num) return false;
         if (
-          board[3 * ((row / 3) | 0) + ((i / 3) | 0)][3 * ((col / 3) | 0) + (3 % 0)] ===
+          board[3 * ((row / 3) | 0) + ((i / 3) | 0)][3 * ((col / 3) | 0) + (i % 3)] ===
           num
         )
           return false;
@@ -93,8 +90,6 @@ class App extends Component {
 
     dfs(board);
 
-    console.log(board);
-
     this.setState(
       produce((state) => {
         for (let row = 0; row < 9; row++) {
@@ -106,10 +101,6 @@ class App extends Component {
     );
   };
 
-  componentDidMount() {
-    console.log(this.myRef.current.click());
-  }
-
   render() {
     return (
       <div className="App">
@@ -118,9 +109,8 @@ class App extends Component {
         </header>
         <SudokuBoard sudoku={this.state.sudoku} onChange={this.handleChange} />
         <button
-          ref={this.myRef}
           onClick={this.solveSudoku}
-          className="tesla fill-flat mdc-button mdc-button--unelevated"
+          className="tesla solve fill-flat mdc-button mdc-button--unelevated"
         >
           solve
         </button>
