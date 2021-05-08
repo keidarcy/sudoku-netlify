@@ -1,49 +1,17 @@
 import React, { Component } from 'react';
-import generator from 'sudoku';
 import './App.css';
 import logo from './logo.svg';
 import produce from 'immer';
 import SudokuBoard from './components/SudokuBoard';
-
-window.generator = generator;
-
-/**
- * Generates a sudoku with the structure
- *
- * {rows: [{index: 0, cols: [{row: 0, col: 0, value:1, readonly: true}, ...]}, ...]}
- *
- */
-function generatorSudoku() {
-  const raw = generator.makepuzzle();
-  console.log(raw);
-
-  const result = { rows: [] };
-
-  for (let i = 0; i < 9; i++) {
-    const row = { cols: [], index: i };
-    for (let j = 0; j < 9; j++) {
-      const value = Number.isInteger(raw[i * 9 + j]) ? raw[i * 9 + j] + 1 : null;
-      const col = {
-        row: i,
-        col: j,
-        value,
-        readOnly: value !== null
-      };
-      row.cols.push(col);
-    }
-    result.rows.push(row);
-  }
-  console.log(result);
-
-  return result;
-}
+import CreateValidSudoku from './libs/sudoku';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = produce({}, () => ({
-      sudoku: generatorSudoku()
+      sudoku: CreateValidSudoku()
     }));
+    this.btnRef = React.createRef();
   }
 
   handleChange = (e) => {
@@ -90,6 +58,7 @@ class App extends Component {
 
     dfs(board);
 
+    this.btnRef.current.style.setProperty('--tesla-blur', Math.random() * 100);
     this.setState(
       produce((state) => {
         for (let row = 0; row < 9; row++) {
@@ -107,13 +76,12 @@ class App extends Component {
         <header className="App-header static space">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <SudokuBoard sudoku={this.state.sudoku} onChange={this.handleChange} />
-        <button
-          onClick={this.solveSudoku}
-          className="tesla solve fill-flat mdc-button mdc-button--unelevated"
-        >
-          solve
-        </button>
+        <div className="main">
+          <SudokuBoard sudoku={this.state.sudoku} onChange={this.handleChange} />
+          <button ref={this.btnRef} onClick={this.solveSudoku} className="tesla solve">
+            solve
+          </button>
+        </div>
       </div>
     );
   }

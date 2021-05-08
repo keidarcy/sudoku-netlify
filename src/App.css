@@ -96,6 +96,17 @@ pre > div:nth-child(1) > input {
 }
 
 .solve {
-  padding: 1.5rem 3rem !important;
+  padding: 1rem 2rem !important;
   font-weight: 700 !important;
+  font-size: 1.5em;
+  border: 5px solid black;
+  cursor: pointer;
+}
+
+.main {
+  --static-gradient-direction: to-top;
+  --static-gradient-color: rgb(148, 79, 142);
+  --static-gradient-size: 30;
+  background: paint(static-gradient);
+  height: 100vh;
 }
